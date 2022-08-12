@@ -12,7 +12,7 @@ void print(int arr[], int n) {
 
 void bubbleSort(int arr[], int n, int m)
 {
-    if (n == 1)return;
+    if (n == 1) return;
 
     for (int i = 0; i < n - 1; i++) {
         if (arr[i] > arr[i + 1]) {

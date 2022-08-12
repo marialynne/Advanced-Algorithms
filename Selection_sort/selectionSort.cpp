@@ -15,22 +15,24 @@ void print(vector<int> numbers, int n) {
     cout << endl;                                                                                                                
 }                                                                                                                                
 
-vector<int> selectionSort(vector<int> numbers, int n, int m) {                                                                          
+vector<int> selectionSort(vector<int> numbers, int n, int step) {                                                                          
 
-    if (n == 1) return numbers;  
-
-	for (int step = 0; step < n - 1; step++) {
+    if (n == 1) {
+		return numbers;  
+	}
+	else if (step != n) {
 		int min = step;
 		for (int i = step + 1; i < n; i++) {
-			if(numbers[i] < numbers[min]) {                                                                                                            
-				min = i;                                            
-       		 }                                                                                                                        
-   		 }
+			if(numbers[i] < numbers[min]) {
+				min = i;                   
+			}
+		}
+																																
 		swap(numbers[min], numbers[step]);
-		print(numbers,m);
+		print(numbers,n);
+		numbers = selectionSort(numbers,n,step + 1);
 	}
 	return numbers;
-         //selectionSort(numbers,n,m);                                                                                                
 }                                                                                                                                
 
 int main() {                                                                                                                     
@@ -43,7 +45,7 @@ int main() {
 	print(numbers,n);
 	cout << "\n";                                                                                                            
 	                                                                                                                  
-    numbers = selectionSort(numbers,n,n);                                                                                                  
+    numbers = selectionSort(numbers,n,0);                                                                                                  
 	
 	cout << "\nOutput vector: " << endl;
 	print(numbers,n);
