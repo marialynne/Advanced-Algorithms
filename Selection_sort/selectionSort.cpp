@@ -1,28 +1,50 @@
-#include <bits/stdc++.h> 
-using namespace std;
+#include <bits/stdc++.h>                                                                                                         
+using namespace std;                                                                                                             
 
-vector<int> randomNumbers(vector<int> numbers, int n, int maxNumber) {
-	for(int i = 0; i < n; i++) {
-	    numbers.push_back(rand() % maxNumber);
+vector<int> randomNumbers(vector<int> numbers, int n, int maxNumber) {                                                           
+    for(int i = 0; i < n; i++) {                                                                                                 
+        numbers.push_back(rand() % maxNumber);                                                                                   
+    }                                                                                                                            
+	return numbers;                                                                                                              
+}                                                                                                                                
+                                                                                                                                  
+void print(vector<int> numbers, int n) {                                                                                         
+    cout << "\t";                                                                                                                 
+	for(int i = 0; i < n; i++)                                                                                                   
+		cout << numbers[i] << " ";                                                                                               
+    cout << endl;                                                                                                                
+}                                                                                                                                
+
+vector<int> selectionSort(vector<int> numbers, int n, int m) {                                                                          
+
+    if (n == 1) return numbers;  
+
+	for (int step = 0; step < n - 1; step++) {
+		int min = step;
+		for (int i = step + 1; i < n; i++) {
+			if(numbers[i] < numbers[min]) {                                                                                                            
+				min = i;                                            
+       		 }                                                                                                                        
+   		 }
+		swap(numbers[min], numbers[step]);
+		print(numbers,m);
 	}
 	return numbers;
-}
+         //selectionSort(numbers,n,m);                                                                                                
+}                                                                                                                                
 
-void print(vector<int> numbers, int n) {
-	cout << "\t";
-	for(int i = 0; i < n; i++)
-		cout << numbers[i] << " ";
-	cout << endl;
-}
-
-int main() {
-	vector<int> numbers;
-	int n = 10;
-	int maxNumber = 20;
-
-	numbers = randomNumbers(numbers,n,maxNumber);
-
-	cout << "Input vector: " << endl;
+int main() {                                                                                                                     
+    vector<int> numbers;                                                                                                         
+    int n = 20;                                                                                                                  
+    int maxNumber = 20;                                                                                                                                                                                                                                            
+    numbers = randomNumbers(numbers,n,maxNumber);                                                                                
+                                                                                                                                 
+    cout << "Input vector: " << endl;
 	print(numbers,n);
-
-}
+	cout << "\n";                                                                                                            
+	                                                                                                                  
+    numbers = selectionSort(numbers,n,n);                                                                                                  
+	
+	cout << "\nOutput vector: " << endl;
+	print(numbers,n);
+}                     
