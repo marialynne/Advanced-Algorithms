@@ -41,7 +41,7 @@ int main() {
     int maxNumber = 20;                                                                                                                                                                                                                                            
     numbers = randomNumbers(numbers,n,maxNumber);                                                                                
                                                                                                                                  
-    cout << "Input vector: " << endl;
+    cout << "\nInput vector: " << endl;
 	print(numbers,n);
 	cout << "\n";                                                                                                            
 	                                                                                                                  

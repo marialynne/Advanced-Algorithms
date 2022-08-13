@@ -14,7 +14,8 @@ void hanoi_towers(int t1[], int t2[], int t3[], int n) {
 
     if(n==1)
     { 
-
+        t2[n] = t1[n];
+        t1[n] = begin(t1)
     }
 
     else

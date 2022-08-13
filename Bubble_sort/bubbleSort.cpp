@@ -29,12 +29,12 @@ int main() {
 	int arr[] = {8,6,7,4,5,3,2};
 	int n = *(&arr + 1) - arr;
     
-	cout << "\nInput arr: " << endl;
+	cout << "\nInput array: " << endl;
     print(arr,n);
 	cout << "\n";
 
     bubbleSort(arr,n,n); // Sort elements in ascending order
 	
-    cout << "\nOutput arr: "<< endl;
+    cout << "\nOutput array: "<< endl;
     print(arr,n);
 }
