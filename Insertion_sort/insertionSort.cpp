@@ -15,14 +15,17 @@ vector<int> insertionSort(vector<int> numbers, int n, int step) {
 	}    
 	else if (step != n) {
 		int pivot = numbers[step];  
-        cout <<"Pivot: " << pivot << "\t";
-        int j = step-1;  
-        while(j>=0 && pivot <= numbers[j])  
+        int i = step-1;  
+
+        //cout << "Pivot: " << pivot << "\tIndex: " << i << endl;
+
+        while(i>=0 && pivot <= numbers[i])  
         {  
-            numbers[j+1] = numbers[j];   
-            j--;  
+            numbers[i+1] = numbers[i];   
+            i--;  
         }  
-        numbers[j+1] = pivot;  
+
+        numbers[i+1] = pivot;  
         //cout <<"Pivot: " << pivot << "\t";
         print(numbers,n);
         numbers = insertionSort(numbers,n,step + 1);																												
