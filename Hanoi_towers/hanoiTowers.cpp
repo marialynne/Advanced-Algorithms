@@ -12,44 +12,20 @@ void print(int *t1, int *t2, int *t3,int n) {
     cout << "\t—————————————————————————" << endl;
 }
 
-void hanoi_towers(int t1[], int t2[], int t3[], int n, int &c) {
-
-    if(n==1)
-    { 
-        t2[n] = t1[n];
-        print(t1,t2,t3,n);
-    }
-
-    else
-    {
-        c++;
-        hanoi_towers(t1, t2, t3, n - 1,c);
-        t1[n] = t3[n];
-        print(t1,t2,t3,n);
-        c++;
-        hanoi_towers(t2, t3, t1, n - 1,c);
-    }
-    
-}
-
-
-int main() {
-    int n,c=1;
-    cout << "n: "; cin >> n;
-    int tower_1[n],tower_2[n]={0},tower_3[n]={0};
-
-
-    
-
-    for(int i = 0; i < n; i++) {
-        tower_1[i] = i+1;
-        //cout << tower_1[i] << endl;
-    }
-
-    //print(tower_1,tower_2,tower_3,n);
-
-    
-    hanoi_towers(tower_1, tower_2, tower_3, n, c);
-
-    cout << c << endl;
-}
+void towerOfHanoi(int n, int *from_rod,
+                    int *to_rod, int *aux_rod) { 
+    if (n == 0) return;  
+    towerOfHanoi(n - 1, from_rod, aux_rod, to_rod); 
+    cout << "Move disk " << n << " from rod " << from_rod <<
+                                " to rod " << to_rod << endl; 
+    towerOfHanoi(n - 1, aux_rod, to_rod, from_rod); 
+} 
+  
+// Driver code
+int main() 
+{ 
+    int n = 4; // Number of disks
+	int arr[n];
+    towerOfHanoi(n, arr, {0}, {0}); // A, B and C are names of rods 
+    return 0; 
+} 
