@@ -135,7 +135,7 @@ vector<double> input() {
 int main(){
     vector<double> array; //{8,5,2,9,5,6,10,23,32,20,12,13,4,50,1,29,66,77,88};
     bool process;
-    ifstream myFile;
+  /*   ifstream myFile;
 
 
     myFile.open("test.txt");
@@ -143,7 +143,7 @@ int main(){
         cerr << "Unable to open file datafile.txt";
         exit(1);   // call system to stop
     }   
-
+ */
 
     array = input();
     cout << "\n¿Ver proceso? \n<1> Sí\n<0> No\n"; cin >> process;
