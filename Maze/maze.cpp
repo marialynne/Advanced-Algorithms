@@ -1,32 +1,31 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void printGrid( vector<vector<int>> grid );
-bool safeMove( vector<vector<int>> grid, vector<vector<bool>> visited, int x, int y );
-vector<vector<int>> shortestPath( vector<vector<int>> grid, vector<vector<bool>> visited, pair<int, int> src, pair<int, int> dest, int min_dist, int dist );
+void printGrid(vector<vector<int>> grid);
+bool safeMove(vector<vector<int>> grid, vector<vector<bool>> visited, int x, int y);
+vector<vector<int>> moves(vector<vector<int>> &mat, vector<vector<bool>> &visited, int i, int j, int x, int y, int &min_dist, int dist);
+void shortPath(vector<vector<int>> &grid, int &x, int &y, int &destX, int &destY);
 
 int main()
 {
-    pair<int, int> src = make_pair(0, 0); // Source
-    pair<int, int> dest = make_pair(4, 4); // Destiny
-    vector<vector<int>> grid = {{1,1,1,1,1},
+	vector<vector<int>> grid =  {{1,1,1,1,1},
                                 {1,1,0,0,1},
                                 {1,1,1,1,1},
                                 {0,1,0,1,0},
                                 {1,1,0,1,1}};
-    int rows = grid.size();
-    int cols = grid[0].size();
-    vector<vector<bool>> visited;
-    visited.resize(rows, vector<bool>(cols));
+    int x = 0;
+    int y = 0;
+    int destX = 4;
+    int destY = 4;
 
-    cout << "Maze before tracking:" << endl;
-    printGrid( grid );
-    cout << "\nMaze after tracking:" << endl;
-    grid = shortestPath( grid, visited, src, dest, 0, 0 ); 
-    printGrid( grid );
+    cout << "\nGrid original:\n" << endl;
+    printGrid(grid);
+    cout << "\nSoluciones posibles:\n" << endl;
+    shortPath(grid, x, y, destX, destY);
+
 }
 
-void printGrid( vector<vector<int>> grid ) 
+void printGrid(vector<vector<int>> grid) 
 {
     int i, j;
     int rows = grid.size();
@@ -34,6 +33,7 @@ void printGrid( vector<vector<int>> grid )
 
     for(i=0; i<rows; i++) 
     {
+        cout << "\t";
         for(j=0; j<cols; j++)
         {
             cout << grid[i][j] << " ";
@@ -41,67 +41,71 @@ void printGrid( vector<vector<int>> grid )
         cout << "\n";
     } 
 }
-
-void printGridBool( vector<vector<bool>> grid ) 
+void printSolutions(vector<vector<int>> grid, vector<vector<bool>> visited, int destX, int destY) 
 {
     int i, j;
     int rows = grid.size();
     int cols = grid[0].size();
 
+    grid[destX][destY] = 2;
+
     for(i=0; i<rows; i++) 
     {
         for(j=0; j<cols; j++)
         {
-            cout << grid[i][j] << " ";
+            if(visited[i][j] == 1)
+            {
+                grid[i][j] = 2;
+            }
+
         }
-        cout << "\n";
-    } 
+    }
+    printGrid(grid);
+    cout << endl;
+} 
+
+bool safeMove(vector<vector<int>> grid, vector<vector<bool>> visited, int x, int y) 
+{
+    return (x >= 0 && x < grid.size()) &&  // X 
+            (y >= 0 && y < grid[0].size()) && // Y 
+			grid[x][y] == 1 && !visited[x][y];  // Grid
 }
 
-bool safeMove( vector<vector<int>> grid, vector<vector<bool>> visited, int x, int y ) 
+vector<vector<int>> moves(vector<vector<int>> &grid, vector<vector<bool>> &visited, int x, int y, int destX, int destY, int &min_dist, int dist)
 {
-    return (x >= 0 && x < grid.size()) && 
-            (y >= 0 && y < grid[0].size()) &&
-			grid[x][y] == 1 && !visited[x][y];
-}
-
-vector<vector<int>> shortestPath( vector<vector<int>> grid, vector<vector<bool>> visited, pair<int, int> src, pair<int, int> dest, int min_dist, int dist )
-{
-    int x = src.first;
-    int y = src.second;
-
-    visited[y][x] = true;
-    grid[y][x] = 2;
-
-    // Bottom
-    if(safeMove( grid, visited, x, y + 1)) 
+	if (x == destX && y == destY)
     {
-        src.second = y + 1;
-        grid = shortestPath( grid, visited, src, dest, min_dist, dist + 1);
-    } 
-    // Up
-    if(safeMove( grid, visited, x, y - 1)) 
-    {
-        src.second = y - 1;
-        grid = shortestPath( grid, visited, src, dest, min_dist, dist + 1);
-    } 
-    // Right
-    if(safeMove( grid, visited, x + 1, y)) 
-    {
-        src.first = x + 1;
-        grid = shortestPath( grid, visited, src, dest, min_dist, dist + 1);
-    }  
-    // Left
-    if(safeMove( grid, visited, x - 1, y)) 
-    {
-        src.first = x - 1;
-        grid = shortestPath( grid, visited, src, dest, min_dist, dist + 1);
-    } 
-    visited[x][y] = false;
+		min_dist = min(dist, min_dist);
+        if(min_dist == dist) 
+            printSolutions(grid, visited, destX, destY);
+		return grid;
+	}
 
-    min_dist = min(dist, min_dist);
+	visited[x][y] = true;
+	
+	if (safeMove(grid, visited, x + 1, y)) 
+		grid = moves(grid, visited, x + 1, y, destX, destY, min_dist, dist + 1);
+	if (safeMove(grid, visited, x, y + 1)) 
+		grid = moves(grid, visited, x, y + 1, destX, destY, min_dist, dist + 1);
+	if (safeMove(grid, visited, x - 1, y)) 
+		grid = moves(grid, visited, x - 1, y, destX, destY, min_dist, dist + 1);
+	if (safeMove(grid, visited, x, y - 1))
+		grid = moves(grid, visited, x, y - 1, destX, destY, min_dist, dist + 1);
+
+	visited[x][y] = false;
     return grid;
 }
 
+void shortPath(vector<vector<int>> &grid, int &x, int &y, int &destX, int &destY)
+{
+	if (grid.size() == 0 || grid[x][y] == 0 || grid[destX][destY] == 0) return;
+	
+	int rows = grid.size();
+	int cols = grid[0].size();
+	int min_dist;
 
+	vector<vector<bool>> visited;
+	visited.resize(rows, vector<bool>(cols));
 
+	grid = moves(grid, visited, x, y, destX, destY, min_dist, 0);
+}
