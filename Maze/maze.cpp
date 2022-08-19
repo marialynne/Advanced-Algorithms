@@ -2,10 +2,11 @@
 using namespace std;
 
 void printGrid(vector<vector<int>> grid);
+void printSolutions(vector<vector<int>> grid, vector<vector<bool>> visited, int destX, int destY);
 bool safeMove(vector<vector<int>> grid, vector<vector<bool>> visited, int x, int y);
 vector<vector<int>> moves(vector<vector<int>> &mat, vector<vector<bool>> &visited, int i, int j, int x, int y, int &min_dist, int dist);
 void shortPath(vector<vector<int>> &grid, int &x, int &y, int &destX, int &destY);
-
+int i=0;
 int main()
 {
 	vector<vector<int>> grid =  {{1,1,1,1,1},
@@ -22,7 +23,7 @@ int main()
     printGrid(grid);
     cout << "\nSoluciones posibles:\n" << endl;
     shortPath(grid, x, y, destX, destY);
-
+    cout << i << endl;
 }
 
 void printGrid(vector<vector<int>> grid) 
@@ -41,6 +42,7 @@ void printGrid(vector<vector<int>> grid)
         cout << "\n";
     } 
 }
+
 void printSolutions(vector<vector<int>> grid, vector<vector<bool>> visited, int destX, int destY) 
 {
     int i, j;
@@ -54,10 +56,7 @@ void printSolutions(vector<vector<int>> grid, vector<vector<bool>> visited, int 
         for(j=0; j<cols; j++)
         {
             if(visited[i][j] == 1)
-            {
                 grid[i][j] = 2;
-            }
-
         }
     }
     printGrid(grid);
@@ -78,19 +77,27 @@ vector<vector<int>> moves(vector<vector<int>> &grid, vector<vector<bool>> &visit
 		min_dist = min(dist, min_dist);
         if(min_dist == dist) 
             printSolutions(grid, visited, destX, destY);
-		return grid;
 	}
 
 	visited[x][y] = true;
 	
-	if (safeMove(grid, visited, x + 1, y)) 
-		grid = moves(grid, visited, x + 1, y, destX, destY, min_dist, dist + 1);
-	if (safeMove(grid, visited, x, y + 1)) 
-		grid = moves(grid, visited, x, y + 1, destX, destY, min_dist, dist + 1);
-	if (safeMove(grid, visited, x - 1, y)) 
-		grid = moves(grid, visited, x - 1, y, destX, destY, min_dist, dist + 1);
-	if (safeMove(grid, visited, x, y - 1))
-		grid = moves(grid, visited, x, y - 1, destX, destY, min_dist, dist + 1);
+	if (safeMove(grid, visited, x + 1, y)) {
+        i++;
+        grid = moves(grid, visited, x + 1, y, destX, destY, min_dist, dist + 1);
+    }
+		
+	if (safeMove(grid, visited, x, y + 1)) {
+        i++;
+        grid = moves(grid, visited, x, y + 1, destX, destY, min_dist, dist + 1);
+    }
+	if (safeMove(grid, visited, x - 1, y)) {
+        i++;
+        grid = moves(grid, visited, x - 1, y, destX, destY, min_dist, dist + 1);
+    }
+	if (safeMove(grid, visited, x, y - 1)) {
+        i++;
+        grid = moves(grid, visited, x, y - 1, destX, destY, min_dist, dist + 1);
+    }
 
 	visited[x][y] = false;
     return grid;
