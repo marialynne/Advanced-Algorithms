@@ -6,24 +6,59 @@ void printSolutions(vector<vector<int>> grid, vector<vector<bool>> visited, int 
 bool safeMove(vector<vector<int>> grid, vector<vector<bool>> visited, int x, int y);
 vector<vector<int>> moves(vector<vector<int>> &mat, vector<vector<bool>> &visited, int i, int j, int x, int y, int &min_dist, int dist);
 void shortPath(vector<vector<int>> &grid, int &x, int &y, int &destX, int &destY);
-int i=0;
+int z=0;
 int main()
 {
+    /*
 	vector<vector<int>> grid =  {{1,1,1,1,1},
                                 {1,1,0,0,1},
                                 {1,1,1,1,1},
                                 {0,1,0,1,0},
                                 {1,1,0,1,1}};
+    */
+    vector<vector<int>> maze;
+    int temp, n, m;
+    bool doAction = true;
+    bool numbers, strings;
+
+    cout << "M: "; cin >> m;
+    cout << "\nN: "; cin >> n;
+    
+    for(int i=0; i<m; i++)
+    { 
+        vector<int> rows;
+        for(int j=0; j<n; j++)
+        {
+            cin >> temp;
+            if(!(temp==1 || temp==0)) doAction = false;
+            rows.push_back(temp);
+        }
+        maze.push_back(rows);
+        /* numbers = all_of(rows.begin(), rows.end(), [](int i) { return i==0 || i==1; });
+        if(!numbers)
+        {
+            doAction = false;
+            break;
+        } */
+    }
+
     int x = 0;
     int y = 0;
-    int destX = 4;
-    int destY = 4;
+    int destX = m-1;
+    int destY = n-1;
 
-    cout << "\nGrid original:\n" << endl;
-    printGrid(grid);
-    cout << "\nSoluciones posibles:\n" << endl;
-    shortPath(grid, x, y, destX, destY);
-    cout << i << endl;
+    if(doAction)
+    {
+        cout << "\nGrid original:\n" << endl;
+        printGrid(maze);
+        cout << "\nSoluciones:\n" << endl;
+        shortPath(maze, x, y, destX, destY);
+    }
+    else
+    {
+        cout << "Input invalido :(" << endl;
+    }
+    
 }
 
 void printGrid(vector<vector<int>> grid) 
@@ -76,28 +111,28 @@ vector<vector<int>> moves(vector<vector<int>> &grid, vector<vector<bool>> &visit
     {
 		min_dist = min(dist, min_dist);
         if(min_dist == dist) 
+        {
+            if(z == 0)
+            {
+                cout << "Ramificación y poda:" << endl;
+                printSolutions(grid, visited, destX, destY);
+                cout << "Solicion(es) backtracking: " << endl;
+            }
             printSolutions(grid, visited, destX, destY);
+            z+=1;
+        }
 	}
 
 	visited[x][y] = true;
 	
-	if (safeMove(grid, visited, x + 1, y)) {
-        i++;
+	if (safeMove(grid, visited, x + 1, y)) 
         grid = moves(grid, visited, x + 1, y, destX, destY, min_dist, dist + 1);
-    }
-		
-	if (safeMove(grid, visited, x, y + 1)) {
-        i++;
+	if (safeMove(grid, visited, x, y + 1)) 
         grid = moves(grid, visited, x, y + 1, destX, destY, min_dist, dist + 1);
-    }
-	if (safeMove(grid, visited, x - 1, y)) {
-        i++;
+	if (safeMove(grid, visited, x - 1, y)) 
         grid = moves(grid, visited, x - 1, y, destX, destY, min_dist, dist + 1);
-    }
-	if (safeMove(grid, visited, x, y - 1)) {
-        i++;
+	if (safeMove(grid, visited, x, y - 1)) 
         grid = moves(grid, visited, x, y - 1, destX, destY, min_dist, dist + 1);
-    }
 
 	visited[x][y] = false;
     return grid;
