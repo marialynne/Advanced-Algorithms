@@ -13,7 +13,7 @@ vector<int> kmpa(string str, string substr);
 int main()
 {
     string str = "Hola mundo mun mun!";
-    string substr = "muns";
+    string substr = "mun";
     vector<int> index = kmpa(str, substr);
 
     if(index.empty()) cout << "No se encontró patrón en el texto." << endl;
