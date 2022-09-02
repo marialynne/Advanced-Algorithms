@@ -1,10 +1,12 @@
+/*
+Title: Knuth Morris Pratt Algorithm (KMP)
+By: Manu
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 
-/*
-Title: Knuth Morris Pratt Algorithm (KMP)
-*/
-
+// Functions
 vector<int> getLPS(string substr);
 void kmpa(string str, string substr);
 
@@ -19,7 +21,7 @@ int main()
 void kmpa(string str, string substr) 
 {
     /*
-    Complejodad:
+    Compleiodad:
         Tiempo: O(N+M)
         Espacio: O(M)
     Descripción de función:
@@ -59,7 +61,7 @@ void kmpa(string str, string substr)
 vector<int> getLPS(string substr) 
 {
     /*
-    Complejodad:
+    Complejidad:
         Tiempo: O(N)
         Espacio: O(N)
     Descripción de función:
