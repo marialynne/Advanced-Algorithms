@@ -16,8 +16,22 @@ int main()
     kmpa(str, substr);
 }
 
-void kmpa(string str, string substr) // Time: O(N+M)
+void kmpa(string str, string substr) 
 {
+    /*
+    Complejodad:
+        Tiempo: O(N+M)
+        Espacio: O(M)
+    Descripción de función:
+        Función que implementa Knuth Morris Pratt Algorithm 
+        para ecnontrar patrones en una cadena de texto.
+    Input:
+        string str -> Cadena de text
+        string substr -> Patrón
+    Output:
+        Nada.
+    */
+
     vector<int> lps = getLPS(substr);
     int i=0;
     int j=0;
@@ -42,13 +56,18 @@ void kmpa(string str, string substr) // Time: O(N+M)
     }
 }
 
-vector<int> getLPS(string substr) // Time: O(M)
+vector<int> getLPS(string substr) 
 {
     /*
-        Our default lps = { -1, -1, -1, -1}
-        Our Index =       { 0 , 1 , 2 , 3 }
-        Our Substr =      {'m','u','n','u'}
-        Our Lps =         { -1, -1, -1, -1}
+    Complejodad:
+        Tiempo: O(N)
+        Espacio: O(N)
+    Descripción de función:
+        Función que obtiene el LPS de una cadena de texto.
+    Input:
+        string substr -> Patrón
+    Output:
+        vector<int> lps -> lps del patrón
     */
 
     vector<int> lps(substr.size(),-1);
