@@ -48,18 +48,12 @@ vector<int> kmpa(string str, string substr)
     while(i < str.size())
     {
         if(str[i] == substr[j])
-        {
-            if(j == substr.size()-1) index.push_back(i-2);
+        {   
+            if(j == substr.size()-1) index.push_back(i-substr.size()+1);
             i++; j++;
         }
-        else if(j > 0)
-        {
-            j = lps[j-1]+1;
-        }
-        else
-        {
-            i++;
-        }
+        else if(j > 0) j = lps[j-1]+1;
+        else i++;
     }
 
     return index;
