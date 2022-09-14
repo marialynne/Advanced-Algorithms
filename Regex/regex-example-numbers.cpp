@@ -1,18 +1,20 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-int main()
+bool validarCaracteres(string input)
 {
-    string input = "hola"; //  Aqui pones lo que quieres, puedes poner numeros porque al final es ascii 
-
-    string int_num = "^0$|^[1-9][0-9]*$";
-
+    string int_num = "^[A-F0-9]*$"; //   A -F 0 9
 
     regex pattern(int_num);
 
-    if(regex_match(input, pattern))
-        cout << "matched\n";
+    if (regex_match(input, pattern))
+        return true;
     else
-        cout << "not matched\n";
+        return false;
+}
 
+int main()
+{
+    cout << validarCaracteres("1234567890ABD1234567") << endl;
+    return 0;
 }
