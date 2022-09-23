@@ -3,6 +3,7 @@ using namespace std;
 
 // Created by Manuel Camacho
 void suffixArray(string text);
+bool validation(string text);
 void print(vector<tuple<string, int>> array);
 vector<tuple<string, int>> mergeSort(vector<tuple<string, int>> array);
 
@@ -11,9 +12,31 @@ int main()
     string text;
     cout << "\nType your text: ";
     getline(cin, text);
-    suffixArray(text);
+
+    (validation(text)) ? (exit(0)) : (suffixArray(text));
 
     return 0;
+}
+
+bool validation(string text)
+{
+    string msg = "[ERROR]: Your input is not valid, ";
+
+    if ((text.find(' ') != string::npos))
+    {
+        cout << msg + "text cannot have spaces" << endl;
+        return true;
+    }
+
+    for (auto i : text)
+    {
+        if (!(isspace(i)))
+            return false;
+    }
+
+    cout << msg + "it cannot be an empty text" << endl;
+
+    return true;
 }
 
 void suffixArray(string text)
