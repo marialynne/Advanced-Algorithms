@@ -16,5 +16,7 @@ bool validarCaracteres(string input)
 int main()
 {
     cout << validarCaracteres("1234567890ABD1234567") << endl;
+    cout << "Es: "
+         << "ñ";
     return 0;
 }
