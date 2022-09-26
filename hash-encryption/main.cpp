@@ -163,9 +163,11 @@ void hashEncryption(tuple<string, int> data)
 
     cout << "\nArray a: " << endl;
     cout << "\t";
-    for (auto i : a)
+    int aSize = sizeof(a) / sizeof(int);
+    for (int i = 0; i < aSize; i++)
     {
-        cout << i << " ";
+        a[i] = a[i] % 256;
+        cout << a[i] << " ";
     }
 
     int s = get<1>(data) / (get<1>(data) / 4);
