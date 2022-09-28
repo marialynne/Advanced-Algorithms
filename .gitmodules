@@ -1,0 +1,3 @@
+[submodule "Graph-Algorithms"]
+	path = Graph-Algorithms
+	url = https://github.com/manu-camacho/Graph-Algorithms.git
