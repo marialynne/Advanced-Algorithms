@@ -4,45 +4,51 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <unordered_map>
+using namespace std;
 
-// Nodes
+// Do not edit the class below except for the
+// populateSuffixTrieFrom and contains methods.
+// Feel free to add new properties and methods
+// to the class.
 class TrieNode
 {
 public:
-    std::unordered_map<char, TrieNode *> children;
+    unordered_map<char, TrieNode *> children;
 };
-// Trie
+
 class SuffixTrie
 {
 public:
     TrieNode *root;
     char endSymbol;
 
-    SuffixTrie() // Constructor std::string str
+    SuffixTrie(string str)
     {
         this->root = new TrieNode();
         this->endSymbol = '*';
-        // this->populateSuffixTrieFrom(str);
+        this->populateSuffixTrieFrom(str);
     }
 
     void insertSubstringStartingAt(int index, std::string str)
     {
-        auto node = this->root;
-        std::cout << index << " " << str << std::endl;
-
-        for (int i = index; i < str.length(); i++)
+        for (int j = 0; j < str.length(); j++)
         {
-            char letter = str[i];
-            // std::cout << letter << std::endl;
-            // std::cout << !(node->children[index]) << std::endl;
-            if (!(node->children[index]))
-            {
-                node->children[index] = {};
-            }
+            std::string substr = str.substr(j);
+            // std::cout << substr << std::endl;
+            auto node = this->root;
 
-            node = node->children[index];
+            for (auto i : substr)
+            {
+                if (!(node->children[i])) // Si no encuntra la llave
+                {
+                    auto newChildren = new TrieNode();
+                    node->children[i] = newChildren;
+                }
+                node = node->children[i];
+            }
+            node->children[this->endSymbol] = nullptr;
         }
-        std::cout << node[this->endSymbol].children[index];
     }
 
     void populateSuffixTrieFrom(std::string str)
@@ -51,9 +57,27 @@ public:
             this->insertSubstringStartingAt(i, str);
     }
 
-    bool contains(std::string str)
+    bool contains(string str)
     {
-        // Write your code here.
+        auto node = this->root;
+
+        for (auto i : str)
+        {
+
+            if (!(node->children[i]))
+                return false;
+            node = node->children[i];
+        }
+
+        auto x = node->children;
+        // std::cout << x.first << std::endl;
+
+        for (auto x : node->children)
+        {
+            // std::cout << (x.first == this->endSymbol) << std::endl;
+            if (x.first == this->endSymbol)
+                return true;
+        }
 
         return false;
     }
@@ -62,9 +86,11 @@ public:
 int main()
 {
     std::vector<std::string> dictionary = {"hola", "mundo", "persona", "pasajero", "lechuga"};
-    SuffixTrie myTrie;
+    SuffixTrie myTrie("hola");
     for (auto i : dictionary)
         myTrie.populateSuffixTrieFrom(i);
+
+    std::cout << "Contiene " << myTrie.contains("persona") << std::endl;
 
     return 0;
 }
