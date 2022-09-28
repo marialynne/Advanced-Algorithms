@@ -1,38 +1,70 @@
 #include <unordered_map>
 #include <string>
-using namespace std;
+#include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <vector>
 
-// Do not edit the class below except for the
-// populateSuffixTrieFrom and contains methods.
-// Feel free to add new properties and methods
-// to the class.
+// Nodes
 class TrieNode
 {
 public:
-    unordered_map<char, TrieNode *> children;
+    std::unordered_map<char, TrieNode *> children;
 };
-
+// Trie
 class SuffixTrie
 {
 public:
     TrieNode *root;
     char endSymbol;
 
-    SuffixTrie(string str)
+    SuffixTrie() // Constructor std::string str
     {
         this->root = new TrieNode();
         this->endSymbol = '*';
-        this->populateSuffixTrieFrom(str);
+        // this->populateSuffixTrieFrom(str);
     }
 
-    void populateSuffixTrieFrom(string str)
+    void insertSubstringStartingAt(int index, std::string str)
     {
-        // Write your code here.
+        auto node = this->root;
+        std::cout << index << " " << str << std::endl;
+
+        for (int i = index; i < str.length(); i++)
+        {
+            char letter = str[i];
+            // std::cout << letter << std::endl;
+            // std::cout << !(node->children[index]) << std::endl;
+            if (!(node->children[index]))
+            {
+                node->children[index] = {};
+            }
+
+            node = node->children[index];
+        }
+        std::cout << node[this->endSymbol].children[index];
     }
 
-    bool contains(string str)
+    void populateSuffixTrieFrom(std::string str)
+    {
+        for (int i = 0; i < str.length(); i++)
+            this->insertSubstringStartingAt(i, str);
+    }
+
+    bool contains(std::string str)
     {
         // Write your code here.
+
         return false;
     }
 };
+
+int main()
+{
+    std::vector<std::string> dictionary = {"hola", "mundo", "persona", "pasajero", "lechuga"};
+    SuffixTrie myTrie;
+    for (auto i : dictionary)
+        myTrie.populateSuffixTrieFrom(i);
+
+    return 0;
+}
