@@ -3,7 +3,7 @@ using namespace std;
 
 bool validarCaracteres(string input)
 {
-    string int_num = "^[A-F0-9]*$"; //   A -F 0 9
+    string int_num = "^[0-9]*$"; //   A -F 0 9
 
     regex pattern(int_num);
 
@@ -15,8 +15,7 @@ bool validarCaracteres(string input)
 
 int main()
 {
-    cout << validarCaracteres("1234567890ABD1234567") << endl;
-    cout << "Es: "
-         << "ñ";
+    cout << validarCaracteres("1") << endl;
+
     return 0;
 }
