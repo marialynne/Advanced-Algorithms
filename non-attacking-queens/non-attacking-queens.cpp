@@ -11,7 +11,7 @@ set<vector<int>> cases2;
 
 int main()
 {
-    int n = 60;
+    int n = 8;
 
     cout << "\nNumber of solutions: " << nonAttackingQueens(n) << endl;
     printBoard();
