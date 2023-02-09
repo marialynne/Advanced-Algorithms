@@ -1,4 +1,20 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <cmath>
+#include <map>
+#include <set>
+#include <stack>
+#include <queue>
+#include <deque>
+#include <list>
+#include <iterator>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <iomanip>
+#include <bitset>
 using namespace std;
 
 int getNumberOfAttackingQueenPlacements(int row, vector<int> columnPlacements, int boardSize);
@@ -11,7 +27,7 @@ set<vector<int>> cases2;
 
 int main()
 {
-    int n = 8;
+    int n = 13; // board size is n x n (n queens)
 
     cout << "\nNumber of solutions: " << nonAttackingQueens(n) << endl;
     printBoard();
@@ -93,8 +109,9 @@ bool isNonAttackingPlacement(int row, int col, vector<int> columnPlacements)
         sameColum = columToCheck == col;
         onDiagonal = abs(columToCheck - col) == row - previousRow;
 
-        if (sameColum || onDiagonal)
-            return false;
+        /* if (sameColum || onDiagonal)
+            return false; */
+        return !(sameColum || onDiagonal);
     }
     return true;
 }
